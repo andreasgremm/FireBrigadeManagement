@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<form action="{{url_for('admin_pages.profile')}}" method=post name="change_profile">
+    {{ form.csrf_token }}
+    <dl>
+    	{{ render_field(form.email) }}
+    	{{ render_field(form.vorname) }}
+    	{{ render_field(form.nachname) }}
+    </dl>
+    <p><input type="submit" value="&Auml;ndern"></p>
+</form>
+{% endblock %}

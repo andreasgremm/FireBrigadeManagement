@@ -1,0 +1,81 @@
+{% extends "lehrgang/management.html" %}
+{% block content %}
+{% set rolle=user.getRole() %}
+<h4> Lehrgangsteilnahme anzeigen <h4>
+	{% if teilnehmer %}
+	<table class="table table-striped table-hover" border="1" cellspacing="1" cellpadding="3">
+		<thead>
+		<tr>
+			<th></th>
+			<th>Lehrgang</th>
+			<th>Start</th>
+			<th>Ende</th>
+			<th>Ort</th>
+			<th>Bemerkung</th>
+			<th>Lehrgangsleiter</th>
+			<th>Max. Teilnehmerzahl</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+				{% set i=lehrgang.ltid-1 %}
+				<td>
+					{% if rolle == 'Read_Write' %}
+						<a href="{{url_for('lehrgang_pages.change', lid=lehrgang.lid) }}"><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Datensatz editieren"></a>
+					{% endif %}
+				</td>
+				<td>{{lehrgangtypen[i].langname}}</td>
+				<td>{{ lehrgang.datumvon }}</td>
+				<td>{{ lehrgang.datumbis }}</td>
+				<td>{{ lehrgang.ort }}</td>
+				<td>{{ lehrgang.bemerkung }}</td>
+				<td>{{ lehrgang.lehrgangsleiter }}</td>
+				<td>{{ lehrgang.maxteilnehmer }}</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<h4>Teilnehmer: {{anzteilnehmer}}</h4>
+	{% if anzteilnehmer < 30 %}
+		<a href="mailto:{% for t in teilnehmer %}{% for e in t.lteilnehmer.mail %}{% if 'Angeh' not in e.typ.value %}{{ e.eadress }};{% endif %}{% endfor %}{% endfor %}?Subject=Information%20{{lehrgangtypen[i].kurzname}}%20vom%20{{lehrgang.datumvon}}%20bis%20{{lehrgang.datumbis}}%20in%20{{lehrgang.ort}}">Email an alle Teilnehmer</a>
+	{% endif %}
+	<h4>Priorit&auml;t: niedrige Nummer = h&ouml;here Priorit&auml;t</h4>
+		<table class="table table-striped table-hover" border="1" cellspacing="1" cellpadding="3">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Vorname</th>
+				<th>Teilnahme</th>
+				<th>Priorit&auml;t</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for t in teilnehmer %}
+			<tr>
+				<td>
+					{% if rolle == 'Read_Write' %}
+						<a href="{{url_for('lehrgang_pages.editteilnehmer', lid=lehrgang.lid, pid=t.lteilnehmer.pid) }}"><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Datensatz editieren"></a>
+						<a href="{{url_for('lehrgang_pages.changelehrgang', lid=lehrgang.lid, pid=t.lteilnehmer.pid) }}"><span class="glyphicon glyphicon-eject" rel="tooltip" data-placement="right" title="Lehrgang &auml;ndern"></a>
+					{% endif %}
+				</td>
+				<td>{{ t.lteilnehmer.name }}</td>
+				<td>{{ t.lteilnehmer.vorname }}</td>
+				<td>{{ t.status.value }} </td>
+				<td>{{ t.prioritaet }} </td>
+				<td>{% if t.status == "T" or t.status =="B" %}
+					<a href="{{url_for('lehrgang_pages.importteilnehmer', lid=lehrgang.lid, pid=t.lteilnehmer.pid)}}"><span class="glyphicon glyphicon-import" rel="tooltip" data-placement="left" title="Datensatz importieren"></a>
+						{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table><br>
+		{% if rolle == 'Read_Write' %}
+			<a href="{{url_for('lehrgang_pages.teilnahmeerfassungsearch', lid=teilnehmer[0].lid)}}">Weitere Teilnehmer erfassen.</a>
+		{% endif %}
+	{% endif %}
+	<div class='page-header'></div>
+	
+{% endblock %}

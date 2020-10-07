@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block submenu %}
+    <!-- div class = "navbar navbar-default" role="navigation" -->
+    <div class = "navbar navbar-default navbar-fixed-top" role="navigation">
+    	<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class = "nav navbar-nav">
+                {% if 'bswadmin' in user.employeeType %}
+                    <li><a href="{{url_for('bsw_pages.add')}}">BSW eintragen</a></li>
+                    <li><a href="{{ url_for('bsw_pages.bswreview', months=12) }}">BSW Management</a></li>
+                    <li><a href="{{ url_for('bsw_pages.bswreview', months=-12) }}">BSW Nachsorge</a></li>
+                {% endif %}
+                <form class="navbar-form navbar-right" method="POST" action='{{url_for('bsw_pages.show1')}}'>
+                    {{management_form.hidden_tag()}}
+                    <div class="form-group">
+                        <span class="glyphicon glyphicon-search">BSW:&nbsp;</span>
+                        {{ management_form.ddatum(placeholder='jjjj-mm-tt', autofocus = True) }} &nbsp;
+                        {{ management_form.monate.label }}:&nbsp; {{ management_form.monate() }}
+                    </div>
+                    <input type="submit" style="visibility: hidden;" />
+                </form>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+{% endblock %}

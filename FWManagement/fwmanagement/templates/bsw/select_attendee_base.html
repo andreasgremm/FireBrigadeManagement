@@ -1,0 +1,34 @@
+{%extends "bsw/management.html" %}
+{% block content %}
+<h4>Auswahl der Teilnehmer<h4>
+<form method="POST" action="{{url_for("bsw_pages.addeventmembers", eventid=event_id, months=months, jetztdatumin=jetztdatumin)}}" name="bsw-2">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <table class="table table-hover" border="1" cellspacing="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Auswahl</th>
+            <th>Gruppierung</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for  id, entry in enumerate(ldapclient.get_lists(lists_base_dn)) %}
+            <tr>
+                <td><input type="checkbox" name="{{ entry }}#{{ id }}" value="listselect" /><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Liste Auswählen"></span></td>
+                <td><a href="{{ url_for("bsw_pages.addmembers", eventid=event_id, months=months, jetztdatumin=jetztdatumin, entry=entry, type="list") }}", style='color: black'>{{ entry }}</a></td>
+            </tr>
+        {% endfor %}
+        {% for  id, entry in enumerate(ldapclient.get_groups(groups_base_dn)) %}
+            <tr>
+                <td><input type="checkbox" name="{{ entry }}#{{ id }}" value="groupselect" /><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Liste Auswählen"></span></td>
+                <td><a href="{{ url_for("bsw_pages.addmembers", eventid=event_id, months=months, jetztdatumin=jetztdatumin, entry=entry, type="group") }}", style='color: black'>{{ entry }}</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+    <button id="submitbutton" type="submit">Absenden</button>
+</form>
+<br />
+
+<div class='page-header'></div>
+{% endblock %}

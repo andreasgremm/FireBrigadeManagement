@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Registrierung:</h1>
+{% from "_formhelpers.html" import render_field %}
+<form action="/change_profile" method=post name="change_profile">
+    {{form.hidden_tag()}}
+    <dl>
+    	{{ render_field(form.email) }}
+    	{{ render_field(form.vorname) }}
+    	{{ render_field(form.nachname) }}
+    </dl>
+    <p><input type="submit" value="&Auml;ndern"></p>
+</form>
+{% endblock %}
+

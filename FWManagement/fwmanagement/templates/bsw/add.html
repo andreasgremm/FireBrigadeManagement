@@ -1,0 +1,45 @@
+{% extends "bsw/management.html" %}
+
+{% block content %}
+
+	<h4>Eintrag einer neuen Brandsicherheitswache.</h4>
+
+	{% from "_formhelpers.html" import render_fieldentry %}
+	<form role="form" method="POST" action="{{ do }}">
+		{{form.hidden_tag()}}
+		<table border="1" cellspacing="1" cellpadding="3">
+			<tr>
+				<th>{{form.sdatum.label}}</th>
+				<th>{{form.edatum.label}}</th>
+				<th>{{form.location.label}}</th>
+				<th>{{form.summary.label}}</th>
+				<th>{{form.beschreibung.label}}</th>
+				<th>{{form.bedarf.label}}</th>
+			</tr>
+			<tr>
+				<td>
+						{{ render_fieldentry(form.sdatum) }}
+				</td>
+				<td>
+						{{ render_fieldentry(form.edatum) }}
+				</td>
+				<td>
+						{{ render_fieldentry(form.location) }}
+				</td>
+				<td>
+						{{ render_fieldentry(form.summary) }}
+				</td>
+				<td>
+						{{ render_fieldentry(form.beschreibung) }}
+				</td>
+				<td>
+						{{ render_fieldentry(form.bedarf) }}
+				</td>
+			</tr>
+		</table>
+		<div><button type="submit" class="btn btn-default">erfassen</button>
+	</form>
+
+	<div class='page-header'></div>
+
+{% endblock %}

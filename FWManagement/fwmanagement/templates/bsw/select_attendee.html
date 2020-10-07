@@ -1,0 +1,38 @@
+{%extends "bsw/management.html" %}
+{% block content %}
+<h4>Auswahl der Teilnehmer<h4>
+<form method="POST" action="{{url_for("bsw_pages.addeventmembers", eventid=event_id, months=months, jetztdatumin=jetztdatumin)}}" name="bsw-3">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <table class="table table-hover" border="1" cellspacing="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Auswahl</th>
+            <th>Gruppierung</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if type=="list" %}
+        {% for  id, entry in enumerate(ldapclient.get_listMembers(entry.split(",")[0].split("=")[1], entry.partition(",")[2])) %}
+            <tr>
+                <td><input type="checkbox" name="{{ entry }}#{{ id }}" value="attendeeselect" /><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Liste Auswählen"></span></td>
+                <td><a href="", target="atteendees", style='color: black'>{{ entry }}</a></td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        {% if type=="group" %}
+        {% for  id, entry in enumerate(ldapclient.get_groupMembers(entry.split(",")[0].split("=")[1], entry.partition(",")[2])) %}
+            <tr>
+                <td><input type="checkbox" name="{{ entry }}#{{ id }}" value="attendeeselect" /><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Liste Auswählen"></span></td>
+                <td><a href="", target="atteendees", style='color: black'>{{ entry }}</a></td>
+            </tr>
+        {% endfor %}
+        {% endif %}
+    </tbody>
+  </table>
+
+    <button id="submitbutton" type="submit">Absenden</button>
+</form>
+<br />
+
+<div class='page-header'></div>
+{% endblock %}

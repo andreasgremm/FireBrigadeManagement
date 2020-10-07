@@ -1,0 +1,14 @@
+@media (max-width: 767px) {
+    .navbar-fixed-top {
+        position: relative;
+        top: auto;
+    }
+    .navbar-collapse {
+        max-height: none;
+		  background-color: #6495ed;
+    }
+    body {
+        margin: 0;
+    }
+}
+

@@ -1,0 +1,37 @@
+{%extends "bsw/management.html" %}
+{% block content %}
+<h4>BSW Management<h4>
+{% if events %}
+<form method="POST" action="{{url_for(submitDef)}}" name="bsw-1">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+<table class="table table-hover" border="1" cellspacing="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Startzeitpunkt</th>
+            <th>Titel</th>
+            <th><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="right" title="Datensatz editieren"></span></th>
+            <th>Teilnehmer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for id, entry in enumerate(events) %}
+            {% set index=davclient.set_eventCursorfromIndex(id) %}
+            <tr>
+                <td>{{ davclient.get_eventStart() }}</td>
+                <td>{{ davclient.get_eventEnd() }}</td>
+                <td>{% for attendee in davclient.get_attendeeList() %}
+                    {{ attendee.params['CN'][0]}} - {{ attendee.value.split(':')[1]}} <br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <button type="submit">Absenden</button>
+</form>
+
+<div class='page-header'></div>
+{% endif %}
+{% endblock %}
