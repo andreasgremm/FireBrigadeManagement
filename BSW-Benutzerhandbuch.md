@@ -40,11 +40,11 @@ Unter **BSW eintragen** lässt sich eine neue Brandsicherheitswache in den NextC
 Die dargestellten Formulareinträge korrellieren mit den typischen Kalender-Einträgen.
 Der Eintrag *Bedarf* ermöglicht die Eingabe einer Mindestanzahl an Teilnehmern für die Brandsicherheitswache (Veranstaltung).
 
-Anfangs und Endzeit der Brandsicherheitswache wird in realen Veranstaltungszeiten angegeben. Die Feuerwehrspezifische Dienstanweisung wird die Rüstzeiten vor und nach der Veranstaltung bestimmen. Bei der **BSW Nachsorge** kann eine Excel-Liste mit den Daten der Veranstaltung und den Teilnehmern erzeugt werden, die diese Rüstzeiten ausweist. Als Rüstzeiten werden 1/2 Stunde vor und 1/2 Stunde nach der Veranstaltung ausgewiesen.
+Anfangs und Endzeit der Brandsicherheitswache wird in realen Veranstaltungszeiten angegeben. Die feuerwehrspezifische Dienstanweisung wird die Rüstzeiten vor und nach der Veranstaltung bestimmen. Bei der **BSW Nachsorge** kann eine Excel-Liste mit den Daten der Veranstaltung und den Teilnehmern erzeugt werden, die diese Rüstzeiten ausweist. Als Rüstzeiten werden aktuell 1/2 Stunde vor und 1/2 Stunde nach der Veranstaltung ausgewiesen.
 
 Nach der Erfassung wird im NextCloud-Kalender der Termin mit zusätzlichen Attributen angelegt.
 
-* Kategorie "BSW-Anfrage" und "Bedarf=*Angegebener Bedarf*"
+* Kategorie "BSW-ANFRAGE" und "Bedarf=*Angegebener Bedarf*"
 * Veranstaltung ist als *Vorläufig* deklariert
 * Es sind noch **KEINE Teilnehmer** eingetragen
 * Der aktuelle Benutzer ist als "Organisator" vermerkt
@@ -52,7 +52,7 @@ Nach der Erfassung wird im NextCloud-Kalender der Termin mit zusätzlichen Attri
 
 ![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.06.02.png)
 
-Die Pictogramme auf der rechten Seite der unten dargestellten Screenshots mit Teilnehmern sind mit Hilfsfunktion ausgestattet. Wird der Mauszeiger über das Pictogramm geführt, erscheint eine Erklärung für die Funktion der dazugehörigen Checkbox.
+Die Piktogramme auf der rechten Seite der unten dargestellten Screenshots mit Teilnehmern sind mit Hilfsfunktion ausgestattet. Wird der Mauszeiger über das Piktogramm geführt, erscheint eine Erklärung für die Funktion der dazugehörigen Checkbox.
 
 ![](screenshots/Bildschirmfoto%202020-10-08%20um%2011.27.05.png)
 
@@ -61,7 +61,7 @@ Unter **BSW Management** lässt sich eine zukünftige Brandsicherheitswache verw
 Über die "Kategorie" des Kalendereintrags ergeben sich folgende Ablaufpunkte mit der entsprechenden Farbkennzeichnung.
 
 * BSW-ANFRAGE (Farbe: gelb) bei einem neuen Termin
-* BSW-FINALISIEREN (Farbe: rot) bei genügend Zusagen zum Termin
+* BSW-FINALISIEREN (Farbe: rot) bei genügend Zusagen zum Termin gemäß dem eingetragenen Bedarf.
 * BSW-ANFRAGE-ABGESCHLOSSEN (Farbe: grün) als manuelle Aktion des BSW-Verwalters mit der Festlegung der endgültigen Teilnehmer, der Reserve und der "Führung"
 
 Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlinks führt zu dem konkreten Termin im NextCloud-Kalender.**
