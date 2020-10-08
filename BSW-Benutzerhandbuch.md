@@ -7,9 +7,11 @@ Die Spezifika einer Brandsicherheitswache sind eigentlich nur die benötigte Anz
 
 ## Allgemeine Funktionen
 Nach dem Aufruf der URL für die Anwendung erhält der Benutzer am unteren Browser-Rand ein Menu:
+
 ![](screenshots/Bildschirmfoto_2020-10-06_um_22.29.08.png)
 
 Bei der Auwahl **Einloggen** wird der Benutzer nach seinen Login-daten gefragt:
+
 ![](screenshots/Bildschirmfoto 2020-10-06 um 22.31.35.png)
 
 Nach der erfolgreichen Anmeldung ändert sich das Menu am unteren Bildschirmrand und der Eintrag **BSW** kann angewählt werden. 
@@ -20,6 +22,7 @@ Der Menupunkt **Ausloggen** ist selbsterklärend.
 ![](screenshots/Bildschirmfoto 2020-10-06 um 22.34.41.png)
 
 Am oberen Bildschirmrand erscheint nun ein weiteres Menu:
+
 ![](screenshots/Bildschirmfoto 2020-10-06 um 22.36.40.png)
 
 * Unter **BSW eintragen** lässt sich eine neue Brandsicherheitswache in den NextCloud Kalender eintragen.
@@ -31,6 +34,7 @@ Am oberen Bildschirmrand erscheint nun ein weiteres Menu:
 
 ## BSW eintragen
 Unter **BSW eintragen** lässt sich eine neue Brandsicherheitswache in den NextCloud Kalender eintragen.
+
 ![](screenshots/Bildschirmfoto 2020-10-06 um 22.56.21.png)
 
 Die dargestellten Formulareinträge korrellieren mit den typischen Kalender-Einträgen.
@@ -45,6 +49,7 @@ Nach der Erfassung wird im NextCloud-Kalender der Termin mit zusätzlichen Attri
 * Es sind noch **KEINE Teilnehmer** eingetragen
 * Der aktuelle Benutzer ist als "Organisator" vermerkt
 * Es sind Erinnerungen voreingestellt:
+
 ![](screenshots/Bildschirmfoto 2020-10-06 um 23.06.02.png)
 
 ## BSW Management
@@ -62,7 +67,8 @@ Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlin
 Nach dem Neueintrag eines Termins lassen sich im wesentlichen die Teilnehmer einladen und die Reaktion der Teilnehmer beobachten.
 
 ![](screenshots/Bildschirmfoto 2020-10-06 um 23.33.37.png)
-Grundsätzlcih sind bläuliche Piktogramme ein Hinweis auf weitere Funktionen in dieser Oberfläche.
+
+Grundsätzlich sind bläuliche Piktogramme ein Hinweis auf weitere Funktionen in dieser Oberfläche.
 Die Anwahl des Personen-Piktogramm ermöglicht die Teilnehmer zur Veranstaltung hinzuzufügen.
 
 ![Personen-Piktogramm](screenshots/Bildschirmfoto 2020-10-06 um 23.36.38.png)
@@ -83,6 +89,7 @@ Wenn genügend eingeladene Teilnehmer gemäß dem angegebenen Bedarf zugesagt ha
 ### BSW-ANFRAGE-ABGESCHLOSSEN
 
 ![](screenshots/Bildschirmfoto 2020-10-06 um 23.57.29.png)
+
 Im Status *BSW-ANFRAGE-ABGESCHLOSSEN* können folgende Funktionen durchgeführt werden.
 
 * Teilnehmer aus der Reserve herausholen
@@ -103,7 +110,8 @@ Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlin
 ### BSW-DURCHGEFÜHRT
 
 ![](screenshots/Bildschirmfoto 2020-10-07 um 19.45.54.png)
-Im Status *BSW-ANFRAGE-ABGESCHLOSSEN* können folgende Funktionen durchgeführt werden.
+
+Im Status *BSW-DURCHGEFÜHRT* können folgende Funktionen durchgeführt werden.
 
 * Email an alle Teilnehmer senden
 * An einzelne Teilnehmer kann eine Email gesendet werden

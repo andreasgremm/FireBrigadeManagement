@@ -40,7 +40,7 @@ Die Konfiguration ist relativ simple:
 
 Die aktuell realisierte Konfiguration besteht aus einem vorgedachten LDAP-Verzeichnisbaum:
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 21.32.00.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2021.32.00.png)
 
 * Die Benutzer (users) sind mit der Objekt-Klasse *inetOrgPerson* spezifiziert.
 * Die Gruppen (groups) sind mit der Objekt-Klasse *inetOrgPerson* spezifiziert.
