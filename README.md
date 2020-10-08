@@ -141,5 +141,5 @@ Für einen einfachen Test kann die Anwendung auf dem Rechner gestartet werden:
 
 Über die URL: *http://0.0.0.0:8089/* lässt sich nun die Anwendung erreichen.
 
-Für eine produktive Nutzung wird man die Anwendung als **WSGI** Anwendung in einem Webserver wie Apache oder NGINX laufen lassen.
+Für eine produktive Nutzung wird man die Anwendung als **WSGI** Anwendung in einem Webserver wie Apache oder NGINX laufen lassen. Desweiteren sollte zwingend in einer produktiven Umgebung der Debug-Modus ausgeschaltet werden. [Hinweise hierzu](https://stackoverflow.com/questions/17309889/how-to-debug-a-flask-app)
 
