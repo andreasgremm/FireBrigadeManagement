@@ -3,14 +3,14 @@ Das Programm Feuerwehr-Management dient zur Unterstützung der Verwaltung einer 
 
 Als Basis dient ein LDAP-Verzeichnis für die Verwaltung der Benutzer, Benutzergruppen und deren Berechtigungen, sowie eine NextCloud Installation für die eigentliche Organisationsarbeit.
 
-**Feuerwehr Management** wird verschiedene Funktionalitäten erhalten und ist in dieser Form die Ablöse einer früheren Eigenentwicklung deren Funktionen durch andere professionelle Programme teilweise abgelöst wird. Andererseits sind in diesen kommerziellen Programmen einige Funktionalitäten nicht enthalten.
+**Feuerwehr Management** wird verschiedene Funktionalitäten erhalten und ist in dieser Form die Ablöse einer früheren Eigenentwicklung deren Funktionen durch andere kommerzielle Programme teilweise abgelöst wird. Andererseits sind in diesen kommerziellen Programmen einige Funktionalitäten nicht enthalten.
 
-* Cloud Funktionalitäten wie Dateiverwaltung, Kontakte, Kalender, Umfragen, Aufgaben ua.a.
+* Cloud Funktionalitäten wie Dateiverwaltung, Kontakte, Kalender, Umfragen, Aufgaben u.a.
 * Verwaltung von Brandsicherheitswachen
 * Verwaltung von Lehrgängen
 * ...
 
-Im ersten Schritt wird die ursprüngliche Verwaltung von Brandsicherheitswachen, welche auf einem Google-Kalender basierte, auf Basis eines NextCloud Kalenders realisiert.
+Im ersten Schritt wird die ursprüngliche Verwaltung von Brandsicherheitswachen, welche bei der Feuerwehr Mettmann seit mehreren Jahren auf einem Google-Kalender basierte, auf Basis eines NextCloud Kalenders realisiert.
 
 Die Basis der Programmierung ist *Python 3.x* mit dem Frameworks *Flask* und *BootStrap* mit deren vielfältigen Möglichkeiten.
 
@@ -27,6 +27,23 @@ Beispielhaft sind folgende Phasen realisiert.
 7. Die durchgeführte Brandsicherheitswache muss abgeschlossen werden (Aufwandsentschädigung anweisen)
 
 Die Nutzung der Anwendung ist im [BSW-Benutzerhandbuch](BSW-Benutzerhandbuch.md) beschrieben.
+
+### Installation
+Die Installation kann durch das Klonen dieses GitHub Repositories erfolgen.
+
+![](screenshots/Bildschirmfoto%202020-10-08%20um%2012.45.36.png)
+
+#### Technische Voraussetzungen
+* LDAP Verzeichnis
+* NextCloud Installation
+	* NextCloud Benutzername ist in der Form: *Vorname*_*Nachname* (Konfiguration des Benutzernamens in Zukunft möglich, aktuell nur über Änderung im Programm möglich)
+* Python3
+
+
+Für produktive Anwendung:
+
+* WSGI Funktionalität in einem Webserver 
+
 ### Konfiguration
 
 Die Konfiguration ist relativ simple:
@@ -43,13 +60,18 @@ Die aktuell realisierte Konfiguration besteht aus einem vorgedachten LDAP-Verzei
 ![](screenshots/Bildschirmfoto%202020-10-06%20um%2021.32.00.png)
 
 * Die Benutzer (users) sind mit der Objekt-Klasse *inetOrgPerson* spezifiziert.
-* Die Gruppen (groups) sind mit der Objekt-Klasse *inetOrgPerson* spezifiziert.
+* Die Gruppen (groups) sind mit der Objekt-Klasse *groupOfUniqueNames* spezifiziert.
 * Die Listen (lists) sind mit der Objekt-Klasse *groupOfURLs* spezifiziert und können als dynamische Gruppen (Overlays) angesehen werden, welche sich auf Basis von Filtern beim Zugriff generieren. Beispiel für eine **memberURL** ```ldap:///o=fw,dc=users,dc=bos,dc=de??sub?(objectClass=inetOrgPerson)(ou=mettmann)(employeeType=bsw)```
  
 #### Konfiguration des LDAP-Verzeichnis
 
-* Die Verwalter der BSW bekommen im LDAP-Eintrag den **employeeType** *bswadmin* zugewiesen.
-* Die Teilnehmer einer BSW bekommen im LDAP-Eintrag den **employeeType** *bsw* zugewiesen.
+* Die Verwalter der BSW bekommen im LDAP-Eintrag den **employeeType** *bswadmin* zugewiesen. (Zwingende Voraussetzung)
+* Die Teilnehmer einer BSW bekommen im LDAP-Eintrag den **employeeType** *bsw* zugewiesen. Dieses ermöglicht die einfache Selektierung als Teilnehmer über *Listen*. Es ist ebenfalls eine Selektierung über *Gruppen* möglich, dafür muss der **employeeType** nicht gesetzt werden. Allerdings muss dann der gewünschte Teilnehmer in eine Gruppe aufgenommen werden.
+* Alle verwendeten Benutzer (BSW Admin, BSW Teilnehmer) haben mindestens folgende LDAP Attribute gesetzt
+	* sn (Nachname)
+	* givenName (Vorname)
+	* mail (Email Adresse)
+	* employeeType (siehe oben, nur beim BSW Admin zwingend)
 
 #### Konfiguration der Anwendung
 Für die Konfiguration der LDAP-Zugangsdaten muss ein Python Modul **Security.LDAP** erzeugt werden. 
@@ -73,7 +95,7 @@ LDAP_PASSWORD = "<browseuserpassword>"
 LDAP_BASEDN = "dc=bos,dc=de"
 ```
 
-Die Anwendung ist über die Verzeichnisstruktur selbstlaufend, alleine das Security.LDAP Modul wird über externe Mechanismen eingebunden. 
+Die Anwendung ist über die Verzeichnisstruktur definiert, alleine das Security.LDAP Modul wird über externe Mechanismen eingebunden. 
 
 Beispiel: \$PYTHONPATH/Security/LDAP.py
 
