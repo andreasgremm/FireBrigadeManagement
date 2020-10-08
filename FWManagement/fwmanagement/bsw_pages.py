@@ -240,7 +240,7 @@ def email2person(email):
     ldapclient = LdapClient(
         LDAP_SERVER, LDAP_BASEDN, current_user.dn, current_user.get_password()
     )
-    person = ldapclient.find_byEmail(email, 'dc=users,'+LDAP_BASEDN)
+    person = ldapclient.find_byEmail(email, "dc=users," + LDAP_BASEDN)
     print(person)
     return redirect(url_for("bsw_pages.management"))
 
@@ -611,14 +611,16 @@ def addeventmembers(eventid, months, jetztdatumin=None):
             # print(memberlist)
 
             for (cn, mail) in memberlist:
-                member = davclient.create_attendee(cn,'INDIVIDUAL', 'OPT-PARTICIPANT', 'mailto:'+mail)
+                member = davclient.create_attendee(
+                    cn, "INDIVIDUAL", "OPT-PARTICIPANT", "mailto:" + mail
+                )
                 davclient.add_uniqueAttendee(member)
                 updateneeded = True
 
         if updateneeded:
-                event = davclient.get_currentEvent()
-                # print(event.data)
-                event.save()
+            event = davclient.get_currentEvent()
+            # print(event.data)
+            event.save()
 
         return redirect(
             url_for(
