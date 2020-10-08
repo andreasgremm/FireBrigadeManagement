@@ -263,10 +263,13 @@ class DavCalendar(object):
         return False
 
     def delete_category(self, category):
+        deleted = False
         category_list = self.get_categoryList()
         for c in category_list:
             if category in c.value:
                 c.value.remove(category)
+                deleted = True
+        return deleted
 
     def set_status(self, status):
         if (

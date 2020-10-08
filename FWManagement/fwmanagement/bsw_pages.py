@@ -471,7 +471,8 @@ def bswreview(months="-12", jetztdatumin=None):
                     bswAttendeeCount[attendee.value.split(":")[1]] = 1
 
             for category in [anfrage, finalisieren, anfrageabgeschlossen]:
-                davclient.delete_category(category)
+                if davclient.delete_category(category):
+                    updateneeded = True
             if (not davclient.test_category(durchgefuehrt)) and (
                 not davclient.test_category(abgerechnet)
             ):

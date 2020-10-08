@@ -7,7 +7,7 @@ Die Spezifika einer Brandsicherheitswache sind eigentlich nur die benötigte Anz
 
 ## Allgemeine Funktionen
 Nach dem Aufruf der URL für die Anwendung erhält der Benutzer am unteren Browser-Rand ein Menu:
-![](screenshots/Bildschirmfoto 2020-10-06 um 22.29.08.png)
+![](screenshots/Bildschirmfoto_2020-10-06_um_22.29.08.png)
 
 Bei der Auwahl **Einloggen** wird der Benutzer nach seinen Login-daten gefragt:
 ![](screenshots/Bildschirmfoto 2020-10-06 um 22.31.35.png)
