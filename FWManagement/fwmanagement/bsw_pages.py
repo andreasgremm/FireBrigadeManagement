@@ -18,24 +18,9 @@ from flask import (
     redirect,
     render_template,
     request,
-    session,
     url_for,
 )
 from flask_login import current_user, login_required
-from ldap3 import (
-    ALL,
-    LEVEL,
-    SUBTREE,
-    AttrDef,
-    Attribute,
-    Connection,
-    Entry,
-    ObjectDef,
-    OperationalAttribute,
-    Reader,
-    Server,
-    Writer,
-)
 from werkzeug.datastructures import Headers
 
 from fwmanagement.DavCalendar import DavCalendar
