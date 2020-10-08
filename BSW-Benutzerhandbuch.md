@@ -12,18 +12,18 @@ Nach dem Aufruf der URL für die Anwendung erhält der Benutzer am unteren Brows
 
 Bei der Auwahl **Einloggen** wird der Benutzer nach seinen Login-daten gefragt:
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 22.31.35.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2022.31.35.png)
 
 Nach der erfolgreichen Anmeldung ändert sich das Menu am unteren Bildschirmrand und der Eintrag **BSW** kann angewählt werden. 
 
 Die Menupunkte **Berichte** und **Profil ändern** sind aktuell nur Platzhalter. 
 Der Menupunkt **Ausloggen** ist selbsterklärend.
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 22.34.41.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2022.34.41.png)
 
 Am oberen Bildschirmrand erscheint nun ein weiteres Menu:
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 22.36.40.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2022.36.40.png)
 
 * Unter **BSW eintragen** lässt sich eine neue Brandsicherheitswache in den NextCloud Kalender eintragen.
 * Mit **BSW Management** lassen sich zukünftige Termine (Brandsicherheitswachen) einfach verwalten. Defaultmäßig werden Termine vom aktuellen Datum bis 12 Monate in die Zukunft ausgewählt.
@@ -35,7 +35,7 @@ Am oberen Bildschirmrand erscheint nun ein weiteres Menu:
 ## BSW eintragen
 Unter **BSW eintragen** lässt sich eine neue Brandsicherheitswache in den NextCloud Kalender eintragen.
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 22.56.21.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2022.56.21.png)
 
 Die dargestellten Formulareinträge korrellieren mit den typischen Kalender-Einträgen.
 Der Eintrag *Bedarf* ermöglicht die Eingabe einer Mindestanzahl an Teilnehmern für die Brandsicherheitswache (Veranstaltung).
@@ -50,7 +50,7 @@ Nach der Erfassung wird im NextCloud-Kalender der Termin mit zusätzlichen Attri
 * Der aktuelle Benutzer ist als "Organisator" vermerkt
 * Es sind Erinnerungen voreingestellt:
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 23.06.02.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.06.02.png)
 
 ## BSW Management
 Unter **BSW Management** lässt sich eine zukünftige Brandsicherheitswache verwalten.
@@ -66,12 +66,12 @@ Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlin
 ### BSW-ANFRAGE
 Nach dem Neueintrag eines Termins lassen sich im wesentlichen die Teilnehmer einladen und die Reaktion der Teilnehmer beobachten.
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 23.33.37.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.33.37.png)
 
 Grundsätzlich sind bläuliche Piktogramme ein Hinweis auf weitere Funktionen in dieser Oberfläche.
 Die Anwahl des Personen-Piktogramm ermöglicht die Teilnehmer zur Veranstaltung hinzuzufügen.
 
-![Personen-Piktogramm](screenshots/Bildschirmfoto 2020-10-06 um 23.36.38.png)
+![Personen-Piktogramm](screenshots/Bildschirmfoto%202020-10-06%20um%2023.36.38.png)
 
 * Teilnehmer können in diesem Status manuell durch den Verwalter im Termin auf "Akzeptiert" gesetzt werden. 
 * An einzelne Teilnehmer kann eine Email gesendet werden
@@ -80,7 +80,7 @@ Wenn genügend eingeladene Teilnehmer gemäß dem angegebenen Bedarf zugesagt ha
 
 ### BSW-FINALISIEREN
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 23.41.48.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.41.48.png)
 
 * Sind mehr akzeptierte Teilnehmer vorhanden als im Bedarf angegeben, können Teilnehmer als Reserve gekennzeichnet werden.
 * An einzelne Teilnehmer kann eine Email gesendet werden.
@@ -88,7 +88,7 @@ Wenn genügend eingeladene Teilnehmer gemäß dem angegebenen Bedarf zugesagt ha
 
 ### BSW-ANFRAGE-ABGESCHLOSSEN
 
-![](screenshots/Bildschirmfoto 2020-10-06 um 23.57.29.png)
+![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.57.29.png)
 
 Im Status *BSW-ANFRAGE-ABGESCHLOSSEN* können folgende Funktionen durchgeführt werden.
 
@@ -109,20 +109,26 @@ Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlin
 
 ### BSW-DURCHGEFÜHRT
 
-![](screenshots/Bildschirmfoto 2020-10-07 um 19.45.54.png)
+![](screenshots/Bildschirmfoto%202020-10-07%20um%2019.45.54.png)
 
 Im Status *BSW-DURCHGEFÜHRT* können folgende Funktionen durchgeführt werden.
 
 * Email an alle Teilnehmer senden
 * An einzelne Teilnehmer kann eine Email gesendet werden
-* Durch Anwahl der Checkbox wird der Termin in den Status *BSW-ABGERECHNET* gesetzt. Hierbei wird eine Excel-Liste heruntergeladen, die für diese BSW die Teilnehmer und Veranstaltungsdaten enthält.![](screenshots/Bildschirmfoto 2020-10-07 um 20.02.39.png) Der Absendebutton wird deaktiviert und die Seite muss neu geladen werden.
+* Durch Anwahl der Checkbox wird der Termin in den Status *BSW-ABGERECHNET* gesetzt. Hierbei wird eine Excel-Liste heruntergeladen, die für diese BSW die Teilnehmer und Veranstaltungsdaten enthält.
+
+![](screenshots/Bildschirmfoto%202020-10-07%20um%2020.02.39.png)
+
+Der Absendebutton wird deaktiviert und die Seite muss neu geladen werden.
 
 Zusätzlich wird am Ende der BSW-Liste eine Statistik zu den Teilnehmern ausgegeben (bezogen auf den Zeitraum der dargestellten BSW, also im Default über die letzten 12 Monate).
-![](screenshots/Bildschirmfoto 2020-10-07 um 19.53.18.png)
+
+![](screenshots/Bildschirmfoto%202020-10-07%20um%2019.53.18.png)
 
 ## BSW-ABGERECHNET
 
-![](screenshots/Bildschirmfoto 2020-10-07 um 20.09.14.png)
+![](screenshots/Bildschirmfoto%202020-10-07%20um%2020.09.14.png)
+
 Im Status *BSW-ABGERECHNET* können folgende Funktionen durchgeführt werden.
 
 * An einzelne Teilnehmer kann eine Email gesendet werden
