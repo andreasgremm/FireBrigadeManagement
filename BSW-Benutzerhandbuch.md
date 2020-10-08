@@ -52,6 +52,10 @@ Nach der Erfassung wird im NextCloud-Kalender der Termin mit zusätzlichen Attri
 
 ![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.06.02.png)
 
+Die Pictogramme auf der rechten Seite der unten dargestellten Screenshots mit Teilnehmern sind mit Hilfsfunktion ausgestattet. Wird der Mauszeiger über das Pictogramm geführt, erscheint eine Erklärung für die Funktion der dazugehörigen Checkbox.
+
+![](screenshots/Bildschirmfoto%202020-10-08%20um%2011.27.05.png)
+
 ## BSW Management
 Unter **BSW Management** lässt sich eine zukünftige Brandsicherheitswache verwalten.
 Über die "Kategorie" des Kalendereintrags ergeben sich folgende Ablaufpunkte mit der entsprechenden Farbkennzeichnung.
@@ -62,14 +66,13 @@ Unter **BSW Management** lässt sich eine zukünftige Brandsicherheitswache verw
 
 Der Titel des Termins ist als Hyperlink ausgestaltet. **Die Auswahl des Hyperlinks führt zu dem konkreten Termin im NextCloud-Kalender.**
 
-
 ### BSW-ANFRAGE
 Nach dem Neueintrag eines Termins lassen sich im wesentlichen die Teilnehmer einladen und die Reaktion der Teilnehmer beobachten.
 
 ![](screenshots/Bildschirmfoto%202020-10-06%20um%2023.33.37.png)
 
 Grundsätzlich sind bläuliche Piktogramme ein Hinweis auf weitere Funktionen in dieser Oberfläche.
-Die Anwahl des Personen-Piktogramm ermöglicht die Teilnehmer zur Veranstaltung hinzuzufügen.
+Die Anwahl des Personen-Piktogramm ermöglicht [die Teilnehmer zur Veranstaltung hinzuzufügen](#teilnehmer-hinzufuegen).
 
 ![Personen-Piktogramm](screenshots/Bildschirmfoto%202020-10-06%20um%2023.36.38.png)
 
@@ -77,6 +80,8 @@ Die Anwahl des Personen-Piktogramm ermöglicht die Teilnehmer zur Veranstaltung 
 * An einzelne Teilnehmer kann eine Email gesendet werden
 
 Wenn genügend eingeladene Teilnehmer gemäß dem angegebenen Bedarf zugesagt haben, wechselt der Termin beim erneuten Aufruf des **BSW-MANAGEMENT** in den Status *BSW-FINALISIEREN*.
+
+**ACHTUNG**: Es wird nur die Anzahl der akzeptierten Einladungen gezählt. Der Typ der Teilnahme wird nicht beachtet. Dieses hilft für Termine eine feste Reserve einzuplanen, indem der reale Teilnehmerbedarf um den Reservebedarf erhöht wird.
 
 ### BSW-FINALISIEREN
 
@@ -133,10 +138,24 @@ Im Status *BSW-ABGERECHNET* können folgende Funktionen durchgeführt werden.
 
 * An einzelne Teilnehmer kann eine Email gesendet werden
 
-# Sonstige Möglichkeiten
+# Sonstige Informationen
 Da der Status der Termine im NextCloud Kalender reflektiert wird, können auch alle Aktivitäten manuell dort durchgeführt werden. 
 Die Statuswechsel werden innerhalb der Details an den Kategorien durchgeführt. 
 Die Veränderung der Teilnehmer ist natürlich im Teilnehmer-Tab des Termins möglich. 
 Auch die Erinnerungen lassen sich im Termin modifizieren.
 
+## <a name="teilnehmer-hinzufuegen"></a>Teilnehmer hinzufügen
+Bei der Auswahl *Teilnehmer hinzufügen* (Personen Piktogramm) werden die   im LDAP konfigurierten Listen und Gruppen dargestellt.
+
+![](screenshots/Bildschirmfoto%202020-10-08%20um%2010.46.09.png)
+
+Durch Auswahl der Checkboxen werden die Mitglieder der ausgewählten Listen/Gruppen dem Termin zugeordnet. Sind Teilnehmer in mehreren Listen/Gruppen enthalten, werden diese nur **einmal** zugeordnet. Die Kalenderfunktion sorgt dann für eine Email-Einladung der Teilnehmer. Die Eindeutigkeit bezieht sich auf die Email-Adressen in Kombination mit dem Namen.
+
+Der Name der Gruppierung ist als Hyperlink ausgestaltet, mit der Anwahl werden die Mitglieder dieser Gruppe/Liste aufgelistet.
+
+![](screenshots/Bildschirmfoto%202020-10-08%20um%2010.53.45.png)
+
+Hier lassen sich dann einzelne Mitglieder auswählen und dem Termin zufügen.
+
+Der Vorgang Teilnehmer hinzufügen lässt sich im Status **BSW-ANFRAGE** beliebig oft wiederholen. Die Eindeutigkeit der Zuordnung zum Termin wird beibehalten und bezieht sich auf die Email-Adressen in Kombination mit dem Namen.
 
