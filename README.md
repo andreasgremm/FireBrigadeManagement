@@ -120,7 +120,9 @@ Beispiel:
 
 ```
 BSW_CALENDAR = "Brandsicherheitswache"
-NEXTCLOUD = "http://cloud.innovationv2.localdomain/"
+CALENDAR_HOST_TYP = "NEXTCLOUD"
+CALENDAR_HOST = "http://cloud.innovationv2.localdomain/"
+CALENDAR_MONTH_DEFAULT = 12
 ```
 
 ### Start und Test der Anwendung

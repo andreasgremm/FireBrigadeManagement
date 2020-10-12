@@ -41,6 +41,9 @@ class Benutzer(UserMixin):
         nachname,
         employeeType,
         dn,
+        principal=None,
+        calendarhost=None,
+        bswcalendar=None
     ):
         self.username = username
         self.passwort = generate_password_hash(passwort, method="sha256")
@@ -51,11 +54,28 @@ class Benutzer(UserMixin):
         self.id = id
         self.dn = dn
         self.employeeType = employeeType
+        self.calendarHost = calendarhost
+        self.principal = principal or self.vorname + "_" + self.nachname
+        self.bswCalendar = bswcalendar
         self.temp = (
             Fernet(current_app.config["USER_KEY"])
             .encrypt(passwort.encode())
             .decode()
         )
+
+    def change_defaults(self, destinationIndicator, calendarHost, bswCalendar):
+        self.calendarHost = calendarHost
+        self.bswCalendar = bswCalendar
+
+        if len(destinationIndicator) > 0:
+            for indicator in destinationIndicator:
+                entrylist = indicator.split("?")
+                if self.calendarHost == entrylist[0]:
+                    for entry in entrylist:
+                        if "PRINCIPAL" in entry:
+                            self.principal = entry.split("=")[1]
+                        if "BSWCALENDAR" in entry:
+                            self.bswCalendar = entry.split("=")[1]
 
     def get_password(self):
         return (

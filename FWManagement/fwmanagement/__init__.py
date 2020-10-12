@@ -10,6 +10,7 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 # api = Api(app)
 app.config.from_object("config")
+app.jinja_env.globals.update(int=int, abs=abs, enumerate=enumerate)
 Bootstrap(app)
 
 app.debug = True

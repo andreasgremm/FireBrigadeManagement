@@ -23,7 +23,11 @@ from flask import (
 from flask_login import current_user, login_required
 from werkzeug.datastructures import Headers
 
-from fwmanagement.DavCalendar import DavCalendar
+from fwmanagement.DavCalendar import (
+    DavCalendar,
+    buildCalendarURL,
+    buildCalendarLink,
+)
 from fwmanagement.formulare import BSWAddForm, BSWSearchForm
 from fwmanagement.LdapClient import LdapClient
 from Security.LDAP import LDAP_BASEDN, LDAP_SERVER
@@ -50,7 +54,7 @@ terminStatus = {
 }
 local_tz = pytz.timezone("Europe/Berlin")
 bswcalendar = "BSW_CALENDAR"
-nextcloud = "NEXTCLOUD"
+
 
 bsw_pages = Blueprint("bsw_pages", __name__, template_folder="templates")
 
@@ -86,6 +90,7 @@ def management():
         dienst=None,
         user=current_user,
         management_form=BSWSearchForm(),
+        months=current_app.config["CALENDAR_MONTH_DEFAULT"]
     )
 
 
@@ -97,7 +102,7 @@ def show1():
         return redirect(
             url_for(
                 "bsw_pages.bswreview",
-                months=str(form.monate.data),
+                inmonths=str(form.monate.data),
                 jetztdatumin=form.ddatum.data.strftime("%Y-%m-%d"),
             )
         )
@@ -112,23 +117,18 @@ def add():
     if request.method == "POST" and form.validate():
         locale.setlocale(locale.LC_ALL, "de_DE")
         davclient = DavCalendar(
-            url=current_app.config[nextcloud]
-            + "remote.php/dav/"
-            + "principals/users/"
-            + current_user.vorname
-            + "_"
-            + current_user.nachname
-            + "/",
+            url=buildCalendarURL(
+                current_user, current_app.config["CALENDAR_HOST_TYP"],
+            ),
             username=current_user.username,
             password=current_user.get_password(),
-            calendarname=current_app.config[bswcalendar],
+            calendarname=current_user.bswCalendar,
         )
 
         bsw_calendar = davclient.get_calendar()
         if bsw_calendar is None:
             flash(
-                current_app.config[bswcalendar] + u" nicht zugreifbar",
-                "danger",
+                current_user.bswCalendar + u" nicht zugreifbar", "danger",
             )
             return redirect(url_for("bsw_pages.management"))
 
@@ -139,6 +139,7 @@ def add():
             location=form.location.data,
             description=form.beschreibung.data,
             anzteilnehmer=form.bedarf.data,
+            footer=form.footer.data,
             organizer=(
                 current_user.vorname + " " + current_user.nachname,
                 current_user.email,
@@ -153,6 +154,7 @@ def add():
         user=current_user,
         form=form,
         do=url_for("bsw_pages.add"),
+        months=current_app.config["CALENDAR_MONTH_DEFAULT"],
         management_form=BSWSearchForm(),
     )
 
@@ -161,21 +163,17 @@ def add():
 @login_required
 def sendemail2event(eventid):
     davclient = DavCalendar(
-        url=current_app.config[nextcloud]
-        + "remote.php/dav/"
-        + "principals/users/"
-        + current_user.vorname
-        + "_"
-        + current_user.nachname
-        + "/",
+        url=buildCalendarURL(
+            current_user, current_app.config["CALENDAR_HOST_TYP"],
+        ),
         username=current_user.username,
         password=current_user.get_password(),
-        calendarname=current_app.config[bswcalendar],
+        calendarname=current_user.bswCalendar,
     )
 
     bsw_calendar = davclient.get_calendar()
     if bsw_calendar is None:
-        flash(current_app.config[bswcalendar] + u" nicht zugreifbar", "danger")
+        flash(current_user.bswCalendar + u" nicht zugreifbar", "danger")
         return redirect(url_for("index"))
 
     davclient.fetch_eventbyUID(eventid)
@@ -221,13 +219,18 @@ def sendemail2event(eventid):
 @bsw_pages.route("/email2person/<email>")
 @login_required
 def email2person(email):
-    print(email)
     ldapclient = LdapClient(
         LDAP_SERVER, LDAP_BASEDN, current_user.dn, current_user.get_password()
     )
-    person = ldapclient.find_byEmail(email, "dc=users," + LDAP_BASEDN)
-    print(person)
-    return redirect(url_for("bsw_pages.management"))
+    persons = ldapclient.find_byEmail(email, "dc=users," + LDAP_BASEDN)
+    for person in persons:
+        person_details = ldapclient.get_personDetails(person)
+        return render_template(
+            "bsw/show_person.html",
+            person_details=person_details,
+            user=current_user,
+        )
+    return "<h1>Keine Daten zu " + email + " gefunden</h1>"
 
 
 #    persons = []
@@ -243,47 +246,44 @@ def email2person(email):
 #    )
 
 
-@bsw_pages.route("/BSW_review/", methods=["GET", "POST"])
-@bsw_pages.route("/BSW_review/<months>", methods=["GET", "POST"])
+@bsw_pages.route("/BSW_review/<inmonths>", methods=["GET", "POST"])
 @bsw_pages.route(
-    "/BSW_review/<months>/<jetztdatumin>", methods=["GET", "POST"]
+    "/BSW_review/<inmonths>/<jetztdatumin>", methods=["GET", "POST"]
 )
 @login_required
-def bswreview(months="-12", jetztdatumin=None):
+def bswreview(
+    inmonths, jetztdatumin=None
+):
+    print(inmonths)
+    months = int(inmonths)
     locale.setlocale(locale.LC_ALL, "de_DE")
     davclient = DavCalendar(
-        url=current_app.config[nextcloud]
-        + "remote.php/dav/"
-        + "principals/users/"
-        + current_user.vorname
-        + "_"
-        + current_user.nachname
-        + "/",
+        url=buildCalendarURL(
+            current_user, current_app.config["CALENDAR_HOST_TYP"],
+        ),
         username=current_user.username,
         password=current_user.get_password(),
-        calendarname=current_app.config[bswcalendar],
+        calendarname=current_user.bswCalendar,
     )
 
     bsw_calendar = davclient.get_calendar()
     if bsw_calendar is None:
-        flash(current_app.config[bswcalendar] + u" nicht zugreifbar", "danger")
+        flash(current_user.bswCalendar + u" nicht zugreifbar", "danger")
         return redirect(url_for("index"))
 
-    imonths = int(months)
     if jetztdatumin:
         jetztdatum = datetime.strptime(jetztdatumin, "%Y-%m-%d")
     else:
         jetztdatum = datetime.now()
-
-    if imonths < 0:
-        start = jetztdatum + relativedelta(months=imonths)
+    if months < 0:
+        start = jetztdatum + relativedelta(months=months)
         end = jetztdatum + relativedelta(days=-1)
         bswAttendeeCount = {}
-    elif imonths > 0:
+    elif months > 0:
         start = jetztdatum
-        end = jetztdatum + relativedelta(months=imonths)
+        end = jetztdatum + relativedelta(months=months)
         bswAttendeeCount = None
-    elif imonths == 0:
+    else:
         start = jetztdatum
         end = jetztdatum + relativedelta(days=1)
         bswAttendeeCount = None
@@ -375,22 +375,22 @@ def bswreview(months="-12", jetztdatumin=None):
                             vorname, name = attendee.params["CN"][0].split(" ")
                         sheet.write(ind, 2, name)
                         sheet.write(ind, 3, vorname)
-                        #         a = p.adressen.filter_by(typ="Privat").first()
-                        #         if a:
+                        # a = p.adressen.filter_by(typ="Privat").first()
+                        # if a:
                         #             sheet.write(
                         #                 ind, 4, a.strasse + " " + str(a.hausnr)
                         #             )
                         #             sheet.write(ind, 5, a.plz)
                         #             sheet.write(ind, 6, a.ort)
-                        #         a = p.anschluesse.filter_by(typ="Privat").first()
-                        #         if a:
+                        # a = p.anschluesse.filter_by(typ="Privat").first()
+                        # if a:
                         #             sheet.write(
                         #                 ind, 7, str(a.phonenr.international)
                         #             )
-                        #         a = p.anschluesse.filter_by(
+                        # a = p.anschluesse.filter_by(
                         #             typ="Mobil-privat"
                         #         ).first()
-                        #         if a:
+                        # if a:
                         #             sheet.write(
                         #                 ind, 8, str(a.phonenr.international)
                         #             )
@@ -434,7 +434,7 @@ def bswreview(months="-12", jetztdatumin=None):
 
         return redirect(
             url_for(
-                "bsw_pages.bswreview", months=months, jetztdatumin=jetztdatumin
+                "bsw_pages.bswreview", inmonths=str(months), jetztdatumin=jetztdatumin
             )
         )
 
@@ -442,7 +442,7 @@ def bswreview(months="-12", jetztdatumin=None):
         davclient.set_eventCursor(id)
         updateneeded = False
 
-        if imonths < 0:
+        if months < 0:
             for attendee in davclient.get_attendeeList():
                 if "PARTSTAT" in attendee.params.keys():
                     if "ACCEPTED" not in attendee.params["PARTSTAT"]:
@@ -521,7 +521,7 @@ def bswreview(months="-12", jetztdatumin=None):
         "bsw/BSW.html",
         events=events,
         user=current_user,
-        months=imonths,
+        months=months,
         jetztdatumin=jetztdatumin,
         terminStatus=terminStatus,
         anfrage=anfrage,
@@ -530,12 +530,12 @@ def bswreview(months="-12", jetztdatumin=None):
         durchgefuehrt=durchgefuehrt,
         abgerechnet=abgerechnet,
         datetime=datetime,
-        enumerate=enumerate,
         davclient=davclient,
         statistik=bswAttendeeCount,
         management_form=BSWSearchForm(),
-        nextcloud_calendar=current_app.config[nextcloud]
-        + "apps/calendar/timeGridDay/",
+        calendar_link=buildCalendarLink(
+            current_user.calendarHost, current_app.config["CALENDAR_HOST_TYP"],
+        ),
         submitDef="bsw_pages.bswreview",
     )
 
@@ -554,22 +554,17 @@ def addeventmembers(eventid, months, jetztdatumin=None):
     )
     if request.method == "POST":
         davclient = DavCalendar(
-            url=current_app.config[nextcloud]
-            + "remote.php/dav/"
-            + "principals/users/"
-            + current_user.vorname
-            + "_"
-            + current_user.nachname
-            + "/",
+            url=buildCalendarURL(
+                current_user, current_app.config["CALENDAR_HOST_TYP"],
+            ),
             username=current_user.username,
             password=current_user.get_password(),
-            calendarname=current_app.config[bswcalendar],
+            calendarname=current_user.bswCalendar,
         )
         bsw_calendar = davclient.get_calendar()
         if bsw_calendar is None:
             flash(
-                current_app.config[bswcalendar] + u" nicht zugreifbar",
-                "danger",
+                current_user.bswCalendar + u" nicht zugreifbar", "danger",
             )
             return redirect(url_for("index"))
 
@@ -609,7 +604,7 @@ def addeventmembers(eventid, months, jetztdatumin=None):
 
         return redirect(
             url_for(
-                "bsw_pages.bswreview", months=months, jetztdatumin=jetztdatumin
+                "bsw_pages.bswreview", inmonths=months, jetztdatumin=jetztdatumin
             )
         )
     return render_template(
@@ -620,7 +615,6 @@ def addeventmembers(eventid, months, jetztdatumin=None):
         months=months,
         jetztdatumin=jetztdatumin,
         ldapclient=ldapclient,
-        enumerate=enumerate,
         lists_base_dn="dc=lists," + LDAP_BASEDN,
         groups_base_dn="dc=groups," + LDAP_BASEDN,
     )
@@ -631,7 +625,8 @@ def addeventmembers(eventid, months, jetztdatumin=None):
     methods=["GET", "POST"],
 )
 @bsw_pages.route(
-    "/add-members/<eventid>/<months>/<entry>/<type>", methods=["GET", "POST"]
+    "/add-members/<eventid>/<months>/<entry>/<type>",
+    methods=["GET", "POST"],
 )
 @login_required
 def addmembers(eventid, months, entry, type, jetztdatumin=None):
@@ -646,7 +641,6 @@ def addmembers(eventid, months, entry, type, jetztdatumin=None):
         months=months,
         jetztdatumin=jetztdatumin,
         ldapclient=ldapclient,
-        enumerate=enumerate,
         entry=entry,
         type=type,
     )

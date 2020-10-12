@@ -32,7 +32,6 @@ class LdapClient(object):
                 conn, ObjectDef(["inetOrgPerson"], conn), person,
             )
             r.search()
-            print(r.entries[0].entry_to_ldif())
         return r.entries[0]
 
     def find_byEmail(self, email, search_base):

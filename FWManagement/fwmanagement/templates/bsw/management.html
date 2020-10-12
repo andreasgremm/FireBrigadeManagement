@@ -15,8 +15,8 @@
             <ul class = "nav navbar-nav">
                 {% if 'bswadmin' in user.employeeType %}
                     <li><a href="{{url_for('bsw_pages.add')}}">BSW eintragen</a></li>
-                    <li><a href="{{ url_for('bsw_pages.bswreview', months=12) }}">BSW Management</a></li>
-                    <li><a href="{{ url_for('bsw_pages.bswreview', months=-12) }}">BSW Nachsorge</a></li>
+                    <li><a href="{{ url_for('bsw_pages.bswreview', inmonths=abs(int(months))) }}">BSW Management</a></li>
+                    <li><a href="{{ url_for('bsw_pages.bswreview', inmonths=-abs(int(months))) }}">BSW Nachsorge</a></li>
                 {% endif %}
                 <form class="navbar-form navbar-right" method="POST" action='{{url_for('bsw_pages.show1')}}'>
                     {{management_form.hidden_tag()}}

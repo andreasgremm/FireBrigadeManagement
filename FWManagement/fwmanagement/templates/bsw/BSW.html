@@ -12,7 +12,7 @@ function disableButton() {
     {% set attendeestatus={"REQ-PARTICIPANT":'Teilnehmer',"CHAIR":'BSW Führung',"NON-PARTICIPANT":'Reserve'} %}
     {% set attendeeresponse={"ACCEPTED":'Angenommen',"DECLINED":'Abgesagt',"TENTATIVE":'Eventuell',"NEEDS-ACTION":'Unbeantwortet'} %}
 {% if events %}
-<form method="POST" action="{{url_for(submitDef, months=months, jetztdatumin=jetztdatumin)}}" name="bsw-1"
+<form method="POST" action="{{url_for(submitDef, inmonths=months, jetztdatumin=jetztdatumin)}}" name="bsw-1"
     {% if months < 0 %} onsubmit="disableButton()" {% endif %}>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 <table class="table table-hover" border="1" cellspacing="1" cellpadding="3">
@@ -38,7 +38,7 @@ function disableButton() {
                 {% endfor %}
                 >
                 <td>{{ startdatum }}<br />{{ eventstatus[entry.vobject_instance.vevent.contents["status"][0].value] }}</td>
-                <td><a href="{{ nextcloud_calendar }}{{ davclient.get_eventStart(strformat='%Y-%m-%d') }}", target="event", style='color: black'>{{ summary }}</a></td>
+                <td><a href="{{ calendar_link }}{{ davclient.get_eventStart(strformat='%Y-%m-%d') }}", target="event", style='color: black'>{{ summary }}</a></td>
                 <td>
                     {% if davclient.test_category(finalisieren) %}
                         <input type="checkbox" name="{{event_id}}#0" value="finalize" /><span class="glyphicon glyphicon-edit" rel="tooltip" data-placement="left" title="BSW finalisieren"></span><br />

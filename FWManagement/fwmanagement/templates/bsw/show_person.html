@@ -1,0 +1,23 @@
+{%extends "base.html" %}
+{% block content %}
+<h4>Info zu {{ person_details["givenName"][0] }} {{ person_details["sn"][0] }} <h4>
+<table class="table table-hover" border="1" cellspacing="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Attribut</th>
+            <th>Wert</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>weiter Verweise</td>
+            <td>
+                {% for i, value in enumerate(person_details["labeledURI"]) %}
+                   {% set verweis=value.split("/") %}
+                   <a href="{{ value }}", target="PersonDetails", style='color: black'>Verweis {{ i }}: {{ verweis[2] }} {{ verweis[3] }}</a><br />
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

@@ -1,5 +1,3 @@
-import datetime as dt
-
 from flask_wtf import FlaskForm as Form
 from wtforms import (
     BooleanField,
@@ -24,6 +22,12 @@ from wtforms_components import (
 
 my_date_format = "%Y-%m-%d"
 my_date_format1 = "%d.%m.%Y %H:%M"
+default_footer = """
+Dienstanweisung: 'https://innovation.mettmann.de/nextcloud'
+Meldeformular: 'https://innovation.mettmann.de/nextcloud'
+Email: mailto:Brandsicherheitswache@mettmann.de'
+tel:02104/777 888 999
+"""
 
 
 def checkfile(form, field):
@@ -35,7 +39,8 @@ def checkfile(form, field):
             and filename.rsplit(".", 1)[1] in ALLOWED_EXTENSIONS
         ):
             raise ValidationError(
-                "Falscher Dateityp, es sind nur png,jpg,jpeg,gif Dateien erlaubt."
+                "Falscher Dateityp,"
+                + " es sind nur png,jpg,jpeg,gif Dateien erlaubt."
             )
 
 
@@ -99,17 +104,25 @@ class PersonSearchForm(Form):
 
 
 class BSWSearchForm(Form):
-    ddatum = DateField('BSW (yyyy-mm-tt)', [validators.Required()],
-                format=my_date_format)
+    ddatum = DateField(
+        "BSW (yyyy-mm-tt)", [validators.Required()], format=my_date_format
+    )
     monate = IntegerField(label="Monate", default=0)
 
 
 class BSWAddForm(Form):
-    sdatum = DateTimeField('Anfang (tt.mm.yyyy hh:mm)', [validators.Required()],
-                           format=my_date_format1)
-    edatum = DateTimeField('Ende (tt.mm.yyyy hh:mm)', [validators.Required()],
-                           format=my_date_format1)
+    sdatum = DateTimeField(
+        "Anfang (tt.mm.yyyy hh:mm)",
+        [validators.Required()],
+        format=my_date_format1,
+    )
+    edatum = DateTimeField(
+        "Ende (tt.mm.yyyy hh:mm)",
+        [validators.Required()],
+        format=my_date_format1,
+    )
     location = TextField(u"Ort", [validators.Required()])
     summary = TextField(u"Titel", [validators.Required()])
     beschreibung = TextAreaField(u"Beschreibung", [validators.Required()])
+    footer = TextAreaField(u"Fußzeilen", default=default_footer, validators=[validators.Required()])
     bedarf = IntegerField(u"Teilnehmer-Bedarf", default=2)

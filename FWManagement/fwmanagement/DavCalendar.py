@@ -30,6 +30,26 @@ END:VCALENDAR
 """
 
 
+def buildCalendarURL(user, typ):
+    url = None
+    if typ == "NEXTCLOUD":
+        url = (
+            user.calendarHost
+            + "remote.php/dav/"
+            + "principals/users/"
+            + user.principal
+            + "/"
+        )
+    return url
+
+
+def buildCalendarLink(server, typ):
+    link = None
+    if typ == "NEXTCLOUD":
+        link = server + "index.php/apps/calendar/timeGridDay/"
+    return link
+
+
 class DavCalendar(object):
     """docstring for BSWCalendar."""
 
@@ -97,7 +117,7 @@ class DavCalendar(object):
 
     def get_nextEvent(self):
         if self.eventCursor is not None:
-            if self.eventCursor < self.eventsNum-1:
+            if self.eventCursor < self.eventsNum - 1:
                 self.eventCursor += 1
                 return self.__last_event_list[self.eventCursor]
             else:
@@ -131,7 +151,9 @@ class DavCalendar(object):
             if debug:
                 print(err)
 
-    def create_attendee(self, cn, cutype, role, mail, partstat='NEEDS-ACTION', rsvp="TRUE"):
+    def create_attendee(
+        self, cn, cutype, role, mail, partstat="NEEDS-ACTION", rsvp="TRUE"
+    ):
         params = {
             "CN": [cn],
             "CUTYPE": [cutype],
@@ -159,7 +181,7 @@ class DavCalendar(object):
 
     def find_attendee(self, mail):
         for attendee in self.get_attendeeList():
-            if mail == attendee.value.split(':')[1]:
+            if mail == attendee.value.split(":")[1]:
                 return attendee
         return None
 
@@ -178,9 +200,7 @@ class DavCalendar(object):
             ):
                 self.__last_event_list[
                     self.eventCursor
-                ].vobject_instance.vevent.contents["attendee"].append(
-                    attendee
-                )
+                ].vobject_instance.vevent.contents["attendee"].append(attendee)
         else:
             self.__last_event_list[
                 self.eventCursor
@@ -201,9 +221,7 @@ class DavCalendar(object):
             ):
                 self.__last_event_list[
                     self.eventCursor
-                ].vobject_instance.vevent.contents["attendee"].remove(
-                    attendee
-                )
+                ].vobject_instance.vevent.contents["attendee"].remove(attendee)
 
     def add_uniqueCategory(self, category):
         if (
@@ -354,6 +372,7 @@ class DavCalendar(object):
         summary,
         location,
         description,
+        footer=None,
         anzteilnehmer=None,
         organizer=None,
     ):
@@ -373,7 +392,10 @@ class DavCalendar(object):
             BSWEventStart + dtstart + dtend + categories + BSWEventEnd
         )
         bswtemp.vevent.add("summary").value = summary
-        bswtemp.vevent.add("description").value = description
+        bswtemp.vevent.add("description").value = (
+            description
+            + footer
+        )
         bswtemp.vevent.add("location").value = location
         if organizer is not None:
             tname, tmail = organizer

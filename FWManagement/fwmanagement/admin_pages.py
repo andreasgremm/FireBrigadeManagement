@@ -2,6 +2,7 @@
 from cryptography.fernet import Fernet
 from flask import (
     Blueprint,
+    current_app,
     flash,
     g,
     redirect,
@@ -46,7 +47,14 @@ admin_pages = Blueprint("admin_pages", __name__, template_folder="templates")
 
 
 def ldapauth(uid, password):
-    retrieveAttributes = ["mail", "cn", "sn", "givenName", "employeeType"]
+    retrieveAttributes = [
+        "mail",
+        "cn",
+        "sn",
+        "givenName",
+        "employeeType",
+        "destinationIndicator",
+    ]
     searchFilter = "(uid=" + uid + ")"
 
     try:
@@ -89,11 +97,7 @@ def ldapauth(uid, password):
         conn.unbind()
         return dict(error=True, message=e)
 
-    return dict(
-        userdn=userdn,
-        userattr=userattr,
-        error=False,
-    )
+    return dict(userdn=userdn, userattr=userattr, error=False,)
 
 
 @admin_pages.route("/login", methods=["GET", "POST"])
@@ -118,7 +122,12 @@ def login():
                 authsuccess["userattr"]["givenName"][0],
                 authsuccess["userattr"]["sn"][0],
                 authsuccess["userattr"]["employeeType"],
-                authsuccess["userdn"],
+                authsuccess["userdn"]
+            )
+            registered_user.change_defaults(
+                authsuccess["userattr"]["destinationIndicator"],
+                current_app.config["CALENDAR_HOST"],
+                current_app.config["BSW_CALENDAR"],
             )
             login_user(registered_user, remember=form.remember_me.data)
             session["username"] = username

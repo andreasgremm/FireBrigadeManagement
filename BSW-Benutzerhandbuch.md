@@ -56,6 +56,21 @@ Die Piktogramme auf der rechten Seite der unten dargestellten Screenshots mit Te
 
 ![](screenshots/Bildschirmfoto%202020-10-08%20um%2011.27.05.png)
 
+Das QR-Code-Piktogramm vor dem Teilnehmer ist ein Hyperlink und ermöglicht bei entsprechender Konfiguration weitere Daten zum Teilnehmer abzurufen.
+
+![](screenshots/Bildschirmfoto%202020-10-11%20um%2019.07.11.png)
+
+Wenn zu der Email-Adresse des Teilnehmers ein LDAP-Eintrag gefunden wird, werden verschiedene Attribute angezeigt. Die Werte des Attribut *labeledURI* werden wiederum als Hyperlink dargestellt.
+
+In dem LDAP-Attribut *labeledURI* kann eine Liste von Verweisen auf Adressbuch- oder anderen Einträgen des Teilnehmers hinterlegt werden.
+
+Diese Links können beispielsweise aus der Personal-Datenbank, Linked/IN, ... oder einem NextCloud-Adressbucheintrag kommen.
+
+```
+https://<server>/nextcloud/index.php/apps/contacts/Alle%20Kontakte/2b27f4a2-da3f-432f-81e3-cbcba037be8f~contacts
+```
+
+
 ## BSW Management
 Unter **BSW Management** lässt sich eine zukünftige Brandsicherheitswache verwalten.
 Über die "Kategorie" des Kalendereintrags ergeben sich folgende Ablaufpunkte mit der entsprechenden Farbkennzeichnung.
@@ -159,3 +174,23 @@ Hier lassen sich dann einzelne Mitglieder auswählen und dem Termin zufügen.
 
 Der Vorgang Teilnehmer hinzufügen lässt sich im Status **BSW-ANFRAGE** beliebig oft wiederholen. Die Eindeutigkeit der Zuordnung zum Termin wird beibehalten und bezieht sich auf die Email-Adressen in Kombination mit dem Namen.
 
+## Benutzerspezifische Konfigurationen
+
+Um variabler auf andere Systemumgebungen reagieren zu können gibt es die Möglichkeit im LDAP-Eintrag des Benutzers Konfigurationen einzustellen, um die Defaults zu überschreiben.
+
+Das LDAP-Attribut *destinationIndicator* ermöglicht die Änderung folgender Werte:
+
+* Prinzipal-Part (PRINCIPAL) des NextCloud Benutzernamens (Default: Vorname_Nachname)
+* Name des genutzten Kalenders (BSWCALENDAR)
+
+Anbei ein Beispiel:
+
+![](screenshots/Bildschirmfoto%202020-10-11%20um%2018.26.14.png)
+
+In Abhängigkeit des eingestellten *CALENDAR_HOST* werden die entsprechenden Einträge genutzt.
+Somit können beispielsweise Tests mit anderen Kalendern erfolgen oder auch Installationen mit anderen NextCloud Benutzernamen verwendet werden.
+
+```
+    destinationIndicator: https://innovation.mettmann.de/nextcloud/?PRINCIPAL=10341700-7e40-1036-9980-79fc2fa7b777?BSWCALENDAR=Brandsicherheitswachen(Test)
+                          http://cloud.innovationv2.localdomain/?BSWCALENDAR=Brandsicherheitswachen
+```

@@ -46,6 +46,9 @@ def load_user(userid):
         reguser["nachname"],
         reguser["employeeType"],
         reguser["dn"],
+        reguser["principal"],
+        reguser["calendarHost"],
+        reguser["bswCalendar"],
     )
 
 
