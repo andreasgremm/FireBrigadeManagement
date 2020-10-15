@@ -22,12 +22,6 @@ from wtforms_components import (
 
 my_date_format = "%Y-%m-%d"
 my_date_format1 = "%d.%m.%Y %H:%M"
-default_footer = """
-Dienstanweisung: 'https://innovation.mettmann.de/nextcloud'
-Meldeformular: 'https://innovation.mettmann.de/nextcloud'
-Email: mailto:Brandsicherheitswache@mettmann.de'
-tel:02104/777 888 999
-"""
 
 
 def checkfile(form, field):
@@ -124,5 +118,5 @@ class BSWAddForm(Form):
     location = TextField(u"Ort", [validators.Required()])
     summary = TextField(u"Titel", [validators.Required()])
     beschreibung = TextAreaField(u"Beschreibung", [validators.Required()])
-    footer = TextAreaField(u"Fußzeilen", default=default_footer, validators=[validators.Required()])
-    bedarf = IntegerField(u"Teilnehmer-Bedarf", default=2)
+    footer = TextAreaField(u"Fußzeilen", validators=[validators.Required()])
+    bedarf = IntegerField(u"Teilnehmer-Bedarf")

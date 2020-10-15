@@ -90,7 +90,7 @@ def management():
         dienst=None,
         user=current_user,
         management_form=BSWSearchForm(),
-        months=current_app.config["CALENDAR_MONTH_DEFAULT"]
+        months=current_app.config["CALENDAR_MONTH_DEFAULT"],
     )
 
 
@@ -113,7 +113,18 @@ def show1():
 @login_required
 def add():
     form = BSWAddForm()
-    # form.bedarf.data = current_app.config["DEFAULT_BSW_TEILNEHMER_BEDARF"]
+    form.bedarf.data = current_app.config["BSW_TEILNEHMER_BEDARF"]
+    form.footer.data = (
+        "\r-------------------------------------------------------------------"
+        + "\rDienstanweisung: "
+        + current_app.config["BSW_FOOTER_DIENSTANWEISUNG"]
+        + "\rMeldeformular: "
+        + current_app.config["BSW_FOOTER_MELDEFORMULAR"]
+        + "\rTelefon: "
+        + current_app.config["BSW_FOOTER_TELEFON"]
+        + "\rEmail: "
+        + current_app.config["BSW_FOOTER_EMAIL"]
+    )
     if request.method == "POST" and form.validate():
         locale.setlocale(locale.LC_ALL, "de_DE")
         davclient = DavCalendar(
@@ -251,9 +262,7 @@ def email2person(email):
     "/BSW_review/<inmonths>/<jetztdatumin>", methods=["GET", "POST"]
 )
 @login_required
-def bswreview(
-    inmonths, jetztdatumin=None
-):
+def bswreview(inmonths, jetztdatumin=None):
     print(inmonths)
     months = int(inmonths)
     locale.setlocale(locale.LC_ALL, "de_DE")
@@ -434,7 +443,9 @@ def bswreview(
 
         return redirect(
             url_for(
-                "bsw_pages.bswreview", inmonths=str(months), jetztdatumin=jetztdatumin
+                "bsw_pages.bswreview",
+                inmonths=str(months),
+                jetztdatumin=jetztdatumin,
             )
         )
 
@@ -604,7 +615,9 @@ def addeventmembers(eventid, months, jetztdatumin=None):
 
         return redirect(
             url_for(
-                "bsw_pages.bswreview", inmonths=months, jetztdatumin=jetztdatumin
+                "bsw_pages.bswreview",
+                inmonths=months,
+                jetztdatumin=jetztdatumin,
             )
         )
     return render_template(
@@ -625,8 +638,7 @@ def addeventmembers(eventid, months, jetztdatumin=None):
     methods=["GET", "POST"],
 )
 @bsw_pages.route(
-    "/add-members/<eventid>/<months>/<entry>/<type>",
-    methods=["GET", "POST"],
+    "/add-members/<eventid>/<months>/<entry>/<type>", methods=["GET", "POST"],
 )
 @login_required
 def addmembers(eventid, months, entry, type, jetztdatumin=None):

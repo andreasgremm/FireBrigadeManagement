@@ -114,7 +114,10 @@ pip install -r requirements.txt
 In der Datei **config.py** im Hauptverzeichnis müssen folgende Informationen hinterlegt werden:
 
 * Name des NextCloud-Kalenders **BSW_CALENDAR** der genutzt werden soll. (Muss in NextCloud für den Benutzer schreibend zugreifbar sein)
-* Host **NEXTCLOUD** des NextCloud-Servers 
+* Adresse und Typ des Rechners, der den Kalender beherbergt
+	*  **NEXTCLOUD** bei einem  NextCloud-Server
+*  Default Anzahl der Monate die angezeigt werden sollen
+*  Fußzeilendaten für gleichbleibende Informationen in der Termin-Beschreibung 
 
 Beispiel:
 
@@ -122,7 +125,12 @@ Beispiel:
 BSW_CALENDAR = "Brandsicherheitswache"
 CALENDAR_HOST_TYP = "NEXTCLOUD"
 CALENDAR_HOST = "http://cloud.innovationv2.localdomain/"
-CALENDAR_MONTH_DEFAULT = 12
+CALENDAR_MONTH_DEFAULT = 4
+BSW_FOOTER_DIENSTANWEISUNG = "<Link zur Dienstanweisung>"
+BSW_FOOTER_MELDEFORMULAR = "<Link zum Meldeformular>"
+BSW_FOOTER_TELEFON = "tel:<Nummer des DGL>"
+BSW_FOOTER_EMAIL = "mailto:<Email-Adresse des BSW-MGMT>"
+BSW_TEILNEHMER_BEDARF = 2
 ```
 
 ### Start und Test der Anwendung
