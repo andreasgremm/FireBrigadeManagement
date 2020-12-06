@@ -394,7 +394,7 @@ class DavCalendar(object):
         bswtemp.vevent.add("summary").value = summary
         bswtemp.vevent.add("description").value = (
             description
-            + footer
+            + (footer or "")
         )
         bswtemp.vevent.add("location").value = location
         if organizer is not None:
